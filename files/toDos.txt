@@ -1,11 +1,4 @@
-make
-Find another
+Find another car
 fix the car
 Make the bed
-Add another party to the order
-Water the plants
-hunt
-hunting
-clear
-vent
-venting
+Make another person

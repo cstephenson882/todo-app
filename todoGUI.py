@@ -7,9 +7,12 @@ enter_toDo_textBox = sg.InputText(tooltip='Enter ToDo', key='todos') #tooltip fi
 add_toDo_button = sg.Button("Add")
 list_box = sg.Listbox(values = functions.readToDO(),key ='todo_table',enable_events=True,size=[45,10])
 edit_button = sg.Button("Edit")
+complete_Button = sg.Button('Complete')
+exit_botton = sg.Button('Exit')
 
 layout = [ [enter_toDo_label,enter_toDo_textBox,add_toDo_button],
-           [list_box,edit_button]
+           [list_box,edit_button,complete_Button],
+           [exit_botton]
 
          ]
 print(list_box)
@@ -41,10 +44,21 @@ while True:
             except IndexError:
                 continue
 
+
         case 'Complete':
-            continue
+            #print('active 1')
+            try:
+                index = todos.index(value['todo_table'][0])
+                todos.pop(index)
+                functions.writeToDo(todos)
+                window['todo_table'].update(values=todos)
+                window['todos'].update(value = "")
+            except IndexError:
+                continue
+        case 'Exit':
+            break
         case 'todo_table':
-            window['todos'].update(value = value['todo_table'][0])
+            window['todos'].update(value=value['todo_table'][0])
         case sg.WINDOW_CLOSED:
             break
         #case True:

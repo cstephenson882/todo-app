@@ -30,9 +30,6 @@ while True:
     event, value = window.read(timeout = 200)
     current_date = time.strftime('%b %d, %Y %H:%M:%S')
     window['time'].update(value=current_date)
-    print(event)
-    print(value)
-
     match event:
         case 'Add':
             todos.append(value['todos'] + '\n')

@@ -1,7 +1,11 @@
 import PySimpleGUI as sg
-
+import time
 import functions
 
+
+
+sg.theme('Black')
+clock = sg.Text('', key = 'time')
 enter_toDo_label = sg.Text('Type a to-do: ')
 enter_toDo_textBox = sg.InputText(tooltip='Enter ToDo', key='todos') #tooltip fir hover mouse
 add_toDo_button = sg.Button("Add")
@@ -10,19 +14,22 @@ edit_button = sg.Button("Edit")
 complete_Button = sg.Button('Complete')
 exit_botton = sg.Button('Exit')
 
-layout = [ [enter_toDo_label,enter_toDo_textBox,add_toDo_button],
+
+layout = [ [clock],
+           [enter_toDo_label,enter_toDo_textBox,add_toDo_button],
            [list_box,edit_button,complete_Button],
            [exit_botton]
 
          ]
 print(list_box)
 
-window  = sg.Window('To-Do App', layout)
+window = sg.Window('To-Do App', layout, font = ('Helvetica',20))
 
 todos = functions.readToDO()
 while True:
-
-    event, value = window.read()
+    event, value = window.read(timeout = 200)
+    current_date = time.strftime('%b %d, %Y %H:%M:%S')
+    window['time'].update(value=current_date)
     print(event)
     print(value)
 
@@ -42,6 +49,7 @@ while True:
                 window['todo_table'].update(values=todos)
 
             except IndexError:
+                sg.popup('Please make a selection',font = ('Helvetica',20))
                 continue
 
 
@@ -54,7 +62,7 @@ while True:
                 window['todo_table'].update(values=todos)
                 window['todos'].update(value = "")
             except IndexError:
-                continue
+                sg.popup('Please make a selection',font = ('Helvetica',20))
         case 'Exit':
             break
         case 'todo_table':
